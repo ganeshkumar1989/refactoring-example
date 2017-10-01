@@ -37,7 +37,8 @@ $scope.checkAllFieldsPresent = function () {
 			return false;
 		}
 	}
-	 else if (checkInDate.getTime() == currentDate.getTime() && nowTemp.getHours() >= 24 - $scope.configs.min_hours_for_booking) {
+	 
+	 if (checkInDate.getTime() == currentDate.getTime() && nowTemp.getHours() >= 24 - $scope.configs.min_hours_for_booking) {
 		// Check if booking is possible is checkin date is today
 		$scope.showMessage('Booking is closed for today. Please try for next day.');
 		return false;
