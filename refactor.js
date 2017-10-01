@@ -1,7 +1,6 @@
 $scope.checkAllFieldsPresent = function () {
   if ($scope.requestedListingData) {
-	var atleastOneBookableSelected = false, nowTemp, currentDate, 
-		isTodayCheckIn, checkInDate;
+	var atleastOneBookableSelected = false, nowTemp, currentDate, checkInDate;
 
 	if (!$scope.requestedListingData.date_from || !$scope.requestedListingData.date_until) {
 		$scope.showMessage('Please select your check-in and check-out dates');
@@ -17,9 +16,9 @@ $scope.checkAllFieldsPresent = function () {
 	nowTemp = new Date();
 	currentDate = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);	
 	checkInDate = moment($scope.requestedListingData.date_from, 'DD/MM/YYYY').toDate();
-	isTodayCheckIn = checkInDate.getTime() == currentDate.getTime();
 	
-	if (checkInDate < currentDate) {
+	// Is checkin in past
+	if (checkInDate < currentDate) {		
 		if ($scope.packeageType !== 1 && $scope.listing.code === 'startuptour' && $scope.listing.config['default_date']) {
 			angular.forEach($scope.requestedListingData.bookables, function (bookable) {
 				bookable.requested = 1;
@@ -34,7 +33,7 @@ $scope.checkAllFieldsPresent = function () {
 	if (!atleastOneBookableSelected) {
 	  $scope.showMessage('Please select atleast one stay/experience');
 	  return false;
-	} else if (isTodayCheckIn && nowTemp.getHours() >= 24 - $scope.configs.min_hours_for_booking) {
+	} else if (checkInDate.getTime() == currentDate.getTime() && nowTemp.getHours() >= 24 - $scope.configs.min_hours_for_booking) {
 	  $scope.showMessage('Booking is closed for today. Please try for next day.');
 	  return false;
 	} else {
