@@ -29,16 +29,16 @@ $scope.checkAllFieldsPresent = function () {
 				atleastOneBookableSelected = true;
 			}
 		});
+		if (!atleastOneBookableSelected) {
+			$scope.showMessage('Please select atleast one stay/experience');
+			return false;
+		}
 	}
-
-	if (!atleastOneBookableSelected) {
-	  $scope.showMessage('Please select atleast one stay/experience');
-	  return false;
-	} else if (checkInDate.getTime() == currentDate.getTime() && nowTemp.getHours() >= 24 - $scope.configs.min_hours_for_booking) {
-	  $scope.showMessage('Booking is closed for today. Please try for next day.');
-	  return false;
+	 else if (checkInDate.getTime() == currentDate.getTime() && nowTemp.getHours() >= 24 - $scope.configs.min_hours_for_booking) {
+		$scope.showMessage('Booking is closed for today. Please try for next day.');
+		return false;
 	} else {
-	  return true;
+		return true;
 	}
   } else {
 	$scope.showMessage("Internal error, please refresh the page and continue");
