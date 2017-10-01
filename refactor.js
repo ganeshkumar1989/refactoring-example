@@ -7,12 +7,6 @@ $scope.checkAllFieldsPresent = function () {
 		return false;
 	}
 	
-	angular.forEach($scope.requestedListingData.bookables, function (value) {
-	  if (value && value.requested > 0) {
-		atleastOneBookableSelected = true;
-	  }
-	});
-	
 	nowTemp = new Date();
 	currentDate = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);	
 	checkInDate = moment($scope.requestedListingData.date_from, 'DD/MM/YYYY').toDate();
@@ -28,6 +22,13 @@ $scope.checkAllFieldsPresent = function () {
 
 		$scope.showMessage('Please check-in date cannot be in past');
 		return false;
+	}
+	else{
+		angular.forEach($scope.requestedListingData.bookables, function (value) {
+			if (value && value.requested > 0) {
+				atleastOneBookableSelected = true;
+			}
+		});
 	}
 
 	if (!atleastOneBookableSelected) {
