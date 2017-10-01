@@ -17,8 +17,8 @@ $scope.checkAllFieldsPresent = function () {
 	
 	nowTemp = new Date();
 	currentDate = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);	
-	isTodayCheckIn = moment($scope.requestedListingData.date_from, 'DD/MM/YYYY').valueOf() == currentDate.getTime();
 	checkInDate = moment($scope.requestedListingData.date_from, 'DD/MM/YYYY').toDate();
+	isTodayCheckIn = checkInDate.getTime() == currentDate.getTime();	
 	isPastCheckInDate = checkInDate < currentDate;
 	
 	if (isPastCheckInDate) {
