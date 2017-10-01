@@ -8,17 +8,16 @@ $scope.checkAllFieldsPresent = function () {
 	var isPastCheckInDate = checkInDate < currentDate;
 
 
-	angular.forEach($scope.requestedListingData.bookables, function (value, key) {
-	  if (value && value.requested > 0) {
-		atleastOneBookableSelected = true;
-	  }
-	});
-
-	
 	if (!$scope.requestedListingData.date_from || !$scope.requestedListingData.date_until) {
 		$scope.showMessage('Please select your check-in and check-out dates');
 		return false;
 	}
+	
+	angular.forEach($scope.requestedListingData.bookables, function (value) {
+	  if (value && value.requested > 0) {
+		atleastOneBookableSelected = true;
+	  }
+	});
 	
 	if (isPastCheckInDate) {
 		if ($scope.packeageType !== 1 && $scope.listing.code === 'startuptour' && $scope.listing.config['default_date']) {
