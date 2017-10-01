@@ -1,11 +1,7 @@
 $scope.checkAllFieldsPresent = function () {
   if ($scope.requestedListingData) {
-	var atleastOneBookableSelected = false;
-	var nowTemp = new Date();
-	var currentDate = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-	var isTodayCheckIn = moment($scope.requestedListingData.date_from, 'DD/MM/YYYY').valueOf() == currentDate.getTime();
-	var checkInDate = moment($scope.requestedListingData.date_from, 'DD/MM/YYYY').toDate();
-	var isPastCheckInDate = checkInDate < currentDate;
+	var atleastOneBookableSelected = false, nowTemp, currentDate, 
+		isTodayCheckIn, checkInDate, isPastCheckInDate;
 
 
 	if (!$scope.requestedListingData.date_from || !$scope.requestedListingData.date_until) {
@@ -18,6 +14,12 @@ $scope.checkAllFieldsPresent = function () {
 		atleastOneBookableSelected = true;
 	  }
 	});
+	
+	nowTemp = new Date();
+	currentDate = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);	
+	isTodayCheckIn = moment($scope.requestedListingData.date_from, 'DD/MM/YYYY').valueOf() == currentDate.getTime();
+	checkInDate = moment($scope.requestedListingData.date_from, 'DD/MM/YYYY').toDate();
+	isPastCheckInDate = checkInDate < currentDate;
 	
 	if (isPastCheckInDate) {
 		if ($scope.packeageType !== 1 && $scope.listing.code === 'startuptour' && $scope.listing.config['default_date']) {
