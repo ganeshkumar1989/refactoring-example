@@ -1,8 +1,7 @@
 $scope.checkAllFieldsPresent = function () {
   if ($scope.requestedListingData) {
 	var atleastOneBookableSelected = false, nowTemp, currentDate, 
-		isTodayCheckIn, checkInDate, isPastCheckInDate;
-
+		isTodayCheckIn, checkInDate;
 
 	if (!$scope.requestedListingData.date_from || !$scope.requestedListingData.date_until) {
 		$scope.showMessage('Please select your check-in and check-out dates');
@@ -18,10 +17,9 @@ $scope.checkAllFieldsPresent = function () {
 	nowTemp = new Date();
 	currentDate = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);	
 	checkInDate = moment($scope.requestedListingData.date_from, 'DD/MM/YYYY').toDate();
-	isTodayCheckIn = checkInDate.getTime() == currentDate.getTime();	
-	isPastCheckInDate = checkInDate < currentDate;
+	isTodayCheckIn = checkInDate.getTime() == currentDate.getTime();
 	
-	if (isPastCheckInDate) {
+	if (checkInDate < currentDate) {
 		if ($scope.packeageType !== 1 && $scope.listing.code === 'startuptour' && $scope.listing.config['default_date']) {
 			angular.forEach($scope.requestedListingData.bookables, function (bookable) {
 				bookable.requested = 1;
